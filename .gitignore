@@ -24,8 +24,3 @@ mlruns
 # IDE #
 *.vscode
 
-# Specific Challenges
-06-Deep-Learning/03-Convolutional-Neural-Networks/04-Transfer-Learning/flowers/
-
-# Challengify - test challengification files
-*_challengify*
