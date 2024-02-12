@@ -1,6 +1,12 @@
 import streamlit as st
 import requests
-from streamlit_cropperjs import st_cropperjs
+
+st.set_page_config(layout='wide',initial_sidebar_state='collapsed')
+
+a, b, c = st.columns(3)
+a.page_link(page="upload.py", label="Start", icon="🏠", use_container_width=True)
+b.page_link(page="/pages/crop.py", label="Crop", icon="✂", use_container_width=True)
+c.page_link(page="/pages/results.py", label="Results", icon="💡", use_container_width=True)
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
     
