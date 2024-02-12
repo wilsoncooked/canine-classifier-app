@@ -1,11 +1,14 @@
 import streamlit as st
+import requests
+
 st.title("Canine Classifier 🐶")
-st.write("## Identify your dogs breed! :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog:")
+st.write("## Identify your dogs breed! :dog: :dog: :dog:")
 
 def identify(cropped_pic):
-    url = "https://snoop_dog_endpoint/identify"
-    files = {'dog': cropped_pic}
-    #resp = requests.post(url, files=files)
+    url = "http://127.0.0.1:8000/upload_image"
+    files = {'img': cropped_pic}
+    resp = requests.post(url, files=files)
+    st.write(resp.json())
     #data = resp.json()
     data = {"German shepherd": 80.32,
             "Chihuaha": 10.83,
