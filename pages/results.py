@@ -18,21 +18,15 @@ def identify(cropped_pic):
     message, gif = container.columns(2)
     message.write("Please wait...")
     gif_runner = gif.image("./pages/searching.gif")
-    time.sleep(10) # Testing
+    time.sleep(5) # Testing
     resp = requests.post(url, files=files)
     container.empty()
-    st.write(resp.json())
-    #data = resp.json()
-    data = [{"breedName": "Husky", "percentage": 80.32},
-            {"breedName": "Chihuaha", "percentage": 8.13},
-            {"breedName": "Dachshund", "percentage": 3.14},
-            {"breedName": "Corgie", "percentage": 2.02},
-            {"breedName": "Other", "percentage": 1.02}]
+    data = resp.json()
     col1, col2 = st.columns(2)
     col1.image(cropped_pic)
     col2.write(f"Your dogs recognized breeds are:")
     for breed in data:
-        col2.write(f"{breed['breedName']}: {breed['percentage']}%")
+        col2.write(f"{breed['breedNames']}: {breed['prob']}%")
 
 try:
     identify(st.session_state.cropped_pic)
