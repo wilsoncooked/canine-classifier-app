@@ -21,7 +21,6 @@ def identify(cropped_pic):
     time.sleep(5) # Testing
     resp = requests.post(url, files=files)
     container.empty()
-    st.write(resp.json())
     data = resp.json()
     col1, col2 = st.columns(2)
     col1.image(cropped_pic)
