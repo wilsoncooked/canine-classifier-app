@@ -11,7 +11,7 @@ st.write("## Identify your dogs breed! :dog: :dog: :dog: :dog: :dog: :dog: :dog:
 
 def select_borders(upload):
     st.write("Please draw borders around your dog")
-    cropped_pic = st_cropperjs(pic=st.session_state.upload, btn_text="Identify my dog!")
+    cropped_pic = st_cropperjs(pic=upload, btn_text="Identify my dog!")
     if cropped_pic:
         st.session_state.cropped_pic = cropped_pic
         st.switch_page("/pages/results.py")
