@@ -12,7 +12,7 @@ st.write("## Identify your dogs breed! :dog: :dog: :dog: :dog: :dog: :dog: :dog:
 
 
 def identify(cropped_pic):
-    url = "http://127.0.0.1:8000/upload_image"
+    url = "https://dog-api-image-1-p3osfjuj5a-ew.a.run.app/upload_image"
     files = {'img': cropped_pic}
     container = st.empty()
     message, gif = container.columns(2)

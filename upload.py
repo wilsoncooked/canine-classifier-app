@@ -5,8 +5,8 @@ st.set_page_config(layout='wide',initial_sidebar_state='collapsed')
 
 a, b, c = st.columns(3)
 a.page_link(page="upload.py", label="Start", icon="🏠", use_container_width=True)
-b.page_link(page="/pages/crop.py", label="Crop", icon="✂", use_container_width=True)
-c.page_link(page="/pages/results.py", label="Results", icon="💡", use_container_width=True)
+b.page_link(page="./pages/crop.py", label="Crop", icon="✂", use_container_width=True)
+c.page_link(page="./pages/results.py", label="Results", icon="💡", use_container_width=True)
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
     
@@ -24,11 +24,11 @@ if upload is not None:
     else:
         st.session_state.upload = upload.read()
         
-        st.switch_page("/pages/crop.py")
+        st.switch_page("./pages/crop.py")
         
 if cam is not None:
     if cam.size > MAX_FILE_SIZE:
         st.error("The uploaded file is too large. Please upload an image smaller than 5MB.")
     else:
         st.session_state.upload = cam.read()
-        st.switch_page("/pages/crop.py")
+        st.switch_page("./pages/crop.py")
