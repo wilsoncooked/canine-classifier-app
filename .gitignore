@@ -1,5 +1,5 @@
 .env
-
+secrets.toml
 # OS generated files #
 ######################
 .DS_Store
@@ -23,4 +23,3 @@ mlruns
 *.sqlite
 # IDE #
 *.vscode
-
