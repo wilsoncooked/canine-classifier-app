@@ -1,0 +1,20 @@
+:root {
+  --primary-color: #265736;
+  --background-color: #EAEBE9;
+  --secondary-background-color: #F5F5F5;
+  --text-color: #265736;
+  --secondary-text-color: #D7F15B;
+  --font: sans-serif;
+}
+/*
+.st-emotion-cache-1q274ca {
+  border-left: 2px solid var(--text-color);
+  border-top: 2px solid var(--text-color);
+  border-right: 2px solid var(--text-color);
+}
+
+button {
+  border: 2px solid var(--text-color) !important;
+  background-color: var(--primary-color) !important;
+  color: var(--secondary-text-color) !important;
+} */

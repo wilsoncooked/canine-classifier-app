@@ -23,6 +23,9 @@ install_requirements:
 streamlit:
 	-@streamlit run upload.py
 
+streamlit_test:
+	-@streamlit run test.py
+
 
 # ----------------------------------
 #    LOCAL INSTALL COMMANDS

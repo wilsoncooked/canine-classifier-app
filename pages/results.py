@@ -2,39 +2,79 @@ import streamlit as st
 import requests
 import time # Just for testing purpose
 
-st.set_page_config(layout='wide',initial_sidebar_state='collapsed')
-
+st.set_page_config(
+    page_title="Canine Classifier 🐶",
+    page_icon="🐶",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+with open("styles/results.css") as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 if 'cropped_pic' not in st.session_state:
     st.switch_page("upload.py")
 
-st.title("Canine Classifier 🐶")
-st.write("## Identify your dogs breed! :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog:")
+
+left_co, cent_co, last_co = st.columns(3)
+
+holder = st.empty()
+
+holder = cent_co.image("images/searching.gif")
 
 
-def identify(cropped_pic):
+try:
     url = f"{st.secrets['CANINE_API_URL']}/upload_image"
-    files = {'img': cropped_pic}
-    container = st.empty()
-    message, gif = container.columns(2)
-    message.write("Please wait...")
-    gif_runner = gif.image("./pages/searching.gif")
-    time.sleep(5) # Testing
+    files = {'img': st.session_state.cropped_pic}
     resp = requests.post(url, files=files, timeout=10000)
-    container.empty()
     data = resp.json()
+    holder.empty()
     st.session_state.complete = True
-    col1, col2 = st.columns(2)
-    col1.image(cropped_pic)
-    col2.write(f"Your dogs recognized breeds are:")
+    st.header(f"The results are in:")
     for breed in data:
-        col2.write(f"{breed['breedNames']}: {breed['prob']}%")
+        col1, col2 = st.columns(2)
+        col2.subheader(f"{breed['breedNames']}: {breed['prob']}%")
+        if breed['breedNames'] == "Others":
+            col1.image("images/question.gif")
+        if breed['referenceImageId']:
+            resp = requests.get(
+                f"https://api.thedogapi.com/v1/images/{breed['referenceImageId']}",
+                headers={"Authorization": f"Bearer {st.secrets['THE_DOG_API_KEY']}"},
+                timeout=10000)
+            resp.raise_for_status()
+            data = resp.json()
+            if data:
+                if 'bred_for' in data['breeds'][0]:
+                    col2.caption(f"Bred for: {data['breeds'][0]['bred_for']}")
+                if 'temperament' in data['breeds'][0]:
+                    col2.caption(f"Temperament: {data['breeds'][0]['temperament']}")
+                if 'life_span' in data['breeds'][0]:
+                    col2.caption(f"Life span: {data['breeds'][0]['life_span']}")
+                if 'breed_group' in data['breeds'][0]:
+                    col2.caption(f"Breed group: {data['breeds'][0]['breed_group']}")
+                if 'weight' in data['breeds'][0]:
+                    col2.caption(f"Weight: {data['breeds'][0]['weight']['metric']}kg")
+                if 'height' in data['breeds'][0]:
+                    col2.caption(f"Height: {data['breeds'][0]['height']['metric']}cm")
+                if 'url' in data:
+                    col1.image(data['url'])
+        if breed['referenceImageId'] == None:
+            if breed['breedNames'] == "It doesn't look like a dog!":
+                col1.image('images/snoop_dogg.gif')
+            else:
+                resp = requests.get(
+                    f"https://api.api-ninjas.com/v1/dogs?name={breed['breedNames']}",
+                    headers={"X-Api-Key": f"{st.secrets['NINJA_DOGS_API_KEY']}"},
+                    timeout=10000)
+                resp.raise_for_status()
+                data = resp.json()
+                if data:
+                    col1.image(data[0]['image_link'])
 
-if 'complete' not in st.session_state:
-    try:
-        identify(st.session_state.cropped_pic)
-    except Exception as e:
-        st.write("Please do the previous steps.")
 
+        st.divider()
+except requests.exceptions.RequestException as e:
+    print(e)
 
-if st.button("🐕 Rerun", use_container_width=True): # Streamlit is very strange, it reruns the whole page on click so that it makes another api request, workaround needed
-    st.switch_page("upload.py")
+b1 = st.columns(3)
+with b1[0]:
+    if st.button("🐕 Rerun", use_container_width=True):
+        st.switch_page("upload.py")

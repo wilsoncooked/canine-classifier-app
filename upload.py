@@ -1,11 +1,18 @@
 import streamlit as st
 
-st.set_page_config(layout='wide',initial_sidebar_state='collapsed')
+st.set_page_config(
+    page_title="Canine Classifier 🐶",
+    page_icon="🐶",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+with open("styles/main.css") as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+MAX_FILE_SIZE = 6 * 1024 * 1024  # 6MB
 
-MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 
 st.title("Canine Classifier 🐶")
-st.write("## Identify your dogs breed! :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog:")
+st.subheader("Identify your dogs breed!")
 
 container = st.empty()
 for key in st.session_state.keys():
@@ -29,3 +36,5 @@ if cam is not None:
     else:
         st.session_state.upload = cam.read()
         st.switch_page("/pages/crop.py")
+
+# st.image('images/dog-838281_1920.jpg')
