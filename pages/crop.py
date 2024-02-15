@@ -7,32 +7,30 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+with open("styles/main.css") as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 if 'upload' not in st.session_state:
     st.switch_page("upload.py")
+
+row1 = st.columns(2)
+with row1[0]:
+    st.title("Canine Classifier")
 
 
 # st.session_state.cropped_pic = st.session_state.upload
 # st.switch_page("/pages/results.py")
 
-left_co, right_co = st.columns(2)
-
+st.write("")
 
 def select_borders(upload):
-    with left_co:
-        st.write("Please draw borders around your dog")
-        cropped_pic = st_cropperjs(pic=upload, btn_text="Identify dog" )
-        if cropped_pic:
-                st.session_state.cropped_pic = cropped_pic
-                st.switch_page("/pages/results.py")
+    st.write("Draw borders around your dog")
+    cropped_pic = st_cropperjs(pic=upload, btn_text="Identify dog 🐶", key='cropper' )
+    if cropped_pic:
+            st.session_state.cropped_pic = cropped_pic
+            st.switch_page("/pages/results.py")
 
 
 try:
     select_borders(st.session_state.upload)
 except Exception as e:
     st.switch_page("upload.py")
-
-
-b1 = st.columns(3)
-with b1[0]:
-    if st.button("🐕 Rerun", use_container_width=True):
-        st.switch_page("upload.py")
