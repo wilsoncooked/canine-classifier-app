@@ -18,7 +18,7 @@ container = st.empty()
 for key in st.session_state.keys():
     del st.session_state[key]
 
-col1, col2 = container.columns(2)
+col1, col2 = container.columns(2, gap="medium")
 cam = col1.camera_input("Take a picture of your dog", label_visibility="visible")
 upload = col2.file_uploader("Upload an image of your dog", type=["png", "jpg", "jpeg"])
 
