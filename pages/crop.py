@@ -14,8 +14,7 @@ if 'upload' not in st.session_state:
 
 row1 = st.columns(2)
 with row1[0]:
-    st.title("Canine Classifier")
-
+    st.title("Canine Classifier 🐶")
 
 # st.session_state.cropped_pic = st.session_state.upload
 # st.switch_page("/pages/results.py")

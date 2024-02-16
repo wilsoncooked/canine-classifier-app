@@ -17,5 +17,5 @@ qr.make(fit=True)
 qr_image = qr.make_image(fill_color="black", back_color="white")
 
 # Save or display the QR code
-qr_image.save("qrcode.png")  # Save QR code as PNG image
+qr_image.save("images/qrcode.png")  # Save QR code as PNG image
 qr_image.show()  # Display QR code
