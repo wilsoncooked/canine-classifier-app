@@ -18,7 +18,7 @@ st.session_state.complete = False
 row1 = st.columns(2)
 with row1[1]:
     row2 = st.columns(2)
-    if row2[1].button("Try another dog", use_container_width=True):
+    if row2[1].button("🐕 Try another dog", use_container_width=True):
         st.switch_page("upload.py")
 
 with row1[0]:
